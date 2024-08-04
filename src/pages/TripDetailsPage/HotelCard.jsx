@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import placeholder from "../../assets/placeholder.jpg";
 import { RiMapPin2Fill } from "react-icons/ri";
-import { GetPlaceDetails } from "@/services/ImageApi";
+import { GetPlaceDetails } from "@/services/ImageApisdcc";
 import { useEffect, useState } from "react";
 import conf from "../../config/env_config";
 import money from "../../assets/money.svg";
@@ -10,20 +10,20 @@ import money from "../../assets/money.svg";
 const HotelCard = ({ hotel }) => {
   const [imgUrl, setImgUrl] = useState();
 
-  useEffect(() => {
-    hotel && GetPlacePhoto();
-  }, [hotel]);
+  // useEffect(() => {
+  //   hotel && GetPlacePhoto();
+  // }, [hotel]);
 
-  const GetPlacePhoto = async () => {
-    const data = { textQuery: hotel?.name };
-    await GetPlaceDetails(data).then((resp) => {
-      const img_id = resp?.data?.places[0]?.photos[4]?.name;
-      const photo_url = img_id
-        ? `https://places.googleapis.com/v1/${img_id}/media?maxHeightPx=1000&maxWidthPx=1000&key=${conf.GOOGLE_PLACE_API_KEY}`
-        : "";
-      setImgUrl(photo_url);
-    });
-  };
+  // const GetPlacePhoto = async () => {
+  //   const data = { textQuery: hotel?.name };
+  //   await GetPlaceDetails(data).then((resp) => {
+  //     const img_id = resp?.data?.places[0]?.photos[4]?.name;
+  //     const photo_url = img_id
+  //       ? `https://places.googleapis.com/v1/${img_id}/media?maxHeightPx=1000&maxWidthPx=1000&key=${conf.GOOGLE_PLACE_API_KEY}`
+  //       : "";
+  //     setImgUrl(photo_url);
+  //   });
+  // };
 
   return (
     <div>
@@ -60,7 +60,7 @@ const HotelCard = ({ hotel }) => {
           </div>
 
           <div className="my-2 flex flex-col gap-1">
-            <h2 className="font-bold text-gray-600">{hotel?.name}</h2>
+            <h2 className="font-bold text-gray-600 line-clamp-1 mr-2">{hotel?.name}</h2>
             <div className="flex items-center">
               <svg
                 className="h-3 w-3 text-blue-500 fill-current mr-1"

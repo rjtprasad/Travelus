@@ -1,27 +1,27 @@
 import { Link } from "react-router-dom";
 import placeholder from "../../assets/placeholder.jpg";
 import { useEffect, useState } from "react";
-import { GetPlaceDetails } from "@/services/ImageApi";
+import { GetPlaceDetails } from "@/services/ImageApisdcc";
 import ticket from "../../assets/ticket.svg";
 import conf from "../../config/env_config";
 
 const PlaceCard = ({ place }) => {
   const [imgUrl, setImgUrl] = useState();
 
-  useEffect(() => {
-    place && GetPlacePhoto();
-  }, [place]);
+  // useEffect(() => {
+  //   place && GetPlacePhoto();
+  // }, [place]);
 
-  const GetPlacePhoto = async () => {
-    const data = { textQuery: place?.name };
-    await GetPlaceDetails(data).then((resp) => {
-      const img_id = resp?.data?.places[0]?.photos[1]?.name;
-      const photo_url = img_id
-        ? `https://places.googleapis.com/v1/${img_id}/media?maxHeightPx=1000&maxWidthPx=1000&key=${conf.GOOGLE_PLACE_API_KEY}`
-        : "";
-      setImgUrl(photo_url);
-    });
-  };
+  // const GetPlacePhoto = async () => {
+  //   const data = { textQuery: place?.name };
+  //   await GetPlaceDetails(data).then((resp) => {
+  //     const img_id = resp?.data?.places[0]?.photos[1]?.name;
+  //     const photo_url = img_id
+  //       ? `https://places.googleapis.com/v1/${img_id}/media?maxHeightPx=1000&maxWidthPx=1000&key=${conf.GOOGLE_PLACE_API_KEY}`
+  //       : "";
+  //     setImgUrl(photo_url);
+  //   });
+  // };
 
   return (
     <Link

@@ -1,31 +1,33 @@
 import { Button } from "@/components/ui/button";
 import placeholder from "../../assets/placeholder.jpg";
 import { SiGooglemaps   } from "react-icons/si";
-import { GetPlaceDetails } from "../../services/ImageApi";
+import { GetPlaceDetails } from "../../services/ImageApisdcc";
 import { useEffect, useState } from "react";
 import conf from "../../config/env_config";
 import { Link } from "react-router-dom";
 import calendar from "../../assets/calendar.svg";
 import wallet from "../../assets/wallet.svg";
 import group from "../../assets/group.svg";
+import GetImageUrl from "./ImageApi"
 
 const InfoSection = ({ trip }) => {
   const [imgUrl, setImgUrl] = useState();
 
-  useEffect(() => {
-    trip && GetPlacePhoto();
-  }, [trip]);
+  // useEffect(() => {
+  //   trip && GetPlacePhoto();
+  // }, [trip]);
 
-  const GetPlacePhoto = async () => {
-    const data = { textQuery: trip?.userSelection?.place?.label };
-    await GetPlaceDetails(data).then((resp) => {
-      const img_id = resp?.data?.places[0]?.photos[4]?.name;
-      const photo_url = img_id
-        ? `https://places.googleapis.com/v1/${img_id}/media?maxHeightPx=1000&maxWidthPx=1000&key=${conf.GOOGLE_PLACE_API_KEY}`
-        : "";
-      setImgUrl(photo_url);
-    });
-  };
+  // const GetPlacePhoto = async () => {
+  //   const data = { textQuery: trip?.userSelection?.place};
+  //   await GetImageUrl(data).then((resp) => {
+  //     console.log(resp);
+  //     // const img_id = resp?.data?.places[0]?.photos[4]?.name;
+  //     // const photo_url = img_id
+  //     //   ? `https://places.googleapis.com/v1/${img_id}/media?maxHeightPx=1000&maxWidthPx=1000&key=${conf.GOOGLE_PLACE_API_KEY}`
+  //     //   : "";
+  //     // setImgUrl(photo_url);
+  //   });
+  // };
 
   return (
     <div>
@@ -37,7 +39,7 @@ const InfoSection = ({ trip }) => {
       <div className="flex justify-between items-center">
         <div className="my-5 flex flex-col gap-2">
           <h2 className="font-bold text-2xl">
-            {trip?.userSelection?.place?.label}
+            {trip?.userSelection?.place}
           </h2>
 
           <div className="flex gap-5">
@@ -58,7 +60,7 @@ const InfoSection = ({ trip }) => {
         <Link
           to={
             "https://www.google.com/maps/search/?api=1&query=" +
-            trip?.userSelection?.place?.label
+            trip?.userSelection?.place
           }
           target="_blank"
         >

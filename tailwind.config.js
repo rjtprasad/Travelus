@@ -17,9 +17,6 @@ module.exports = {
       },
     },
     extend: {
-      backgroundImage: {
-        travel_illustration: "url('/travel_illustration.jpg')",
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

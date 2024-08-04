@@ -9,11 +9,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import SignInDialog from "./SignInDialog";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Header = () => {
-  const [openDialog, setOpenDialog] = useState(false);
+  // const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
-  const user = useContext(UserContext);
+  // const user = useContext(UserContext);
+  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
   return (
     <div className="flex justify-between items-center shadow-sm absolute z-10 w-full p-2 px-5 pr-6">
@@ -22,7 +24,7 @@ const Header = () => {
       </h1>
 
       <div>
-        {user.isSignIn ? (
+        { isAuthenticated ? (
           <div className="flex gap-5 items-center">
             <Button
               className="rounded-full h-9"
@@ -36,30 +38,24 @@ const Header = () => {
               variant="outline"
               className="rounded-full h-9"
               onClick={() => {
-                navigate("/prev-trips");
+                navigate("/all-trips");
               }}
             >
-              My Trips
+              All Trips
             </Button>
 
             <Popover>
               <PopoverTrigger>
                 <img
-                  src={user?.profileUrl}
-                  alt="profile_picture"
+                  src={user.picture}
+                  alt={user.name}
                   className="w-[38px] h-[38px] rounded-full"
                 />
               </PopoverTrigger>
               <PopoverContent>
                 <h2
                   className="cursor-pointer"
-                  onClick={() => {
-                    navigate("/");
-                    googleLogout();
-                    localStorage.clear();
-                    user.setIsSignIn(false);
-                    user.setProfileUrl(null);
-                  }}
+                  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
                 >
                   <span className="font-medium">Logout</span>
                 </h2>
@@ -67,10 +63,10 @@ const Header = () => {
             </Popover>
           </div>
         ) : (
-          <Button onClick={() => setOpenDialog(true)}>Sign In</Button>
+          <Button onClick={() => loginWithRedirect()}>Sign In</Button>
         )}
 
-        <SignInDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
+        {/* <SignInDialog openDialog={openDialog} setOpenDialog={setOpenDialog} /> */}
       </div>
     </div>
   );

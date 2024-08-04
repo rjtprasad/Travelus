@@ -50,5 +50,5 @@ export const TravelerOptions = [
   },
 ];
 
-export const prompt =
+export const promptTemplate =
   "Generate Travel Plan for Location : {place}, for {days} Days for {peoples} with a {budget} budget, Give me a Hotels options list with hotel name, hotel address, hotel image url, price, geo coordinates, rating, descriptions and suggest itinerary with place name, place detials, place image url, geo coordinates, ticket price, rating, Time travel each of the location for {days} days with each day plan with best time to visit in JSON format.";

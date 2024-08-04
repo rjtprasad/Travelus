@@ -1,5 +1,4 @@
 import DayPlans from "./DayPlans";
-import PlaceCard from "./PlaceCard";
 import PlaceLoader from "./PlaceLoader";
 
 const PlacesInfo = ({ trip, loading }) => {
@@ -8,7 +7,7 @@ const PlacesInfo = ({ trip, loading }) => {
       <h2 className="font-bold text-xl mt-5">Places to Visit</h2>
 
       {loading ? (
-        Array.from({ length: 4 }).map((_, index) => <PlaceLoader />)
+        Array.from({ length: 4 }).map((_, index) => <PlaceLoader key={index} />)
       ) : (
         <DayPlans trip={trip} />
       )}

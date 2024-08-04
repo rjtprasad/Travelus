@@ -5,16 +5,37 @@ import { useFormik } from "formik";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { onSubmit } from "./handleSubmit";
 import { validate } from "./handleValidation";
+import {
+  useJsApiLoader,
+  StandaloneSearchBox,
+} from "@react-google-maps/api";
+import conf from "@/config/env_config";
+import { useRef } from "react";
 
 const initialValues = {
   place: "",
   days: "",
   budget: "",
   peoples: "",
-  travelerType: ""
+  travelerType: "",
 };
 
+const libraries = ["places"];
+
 const CreateTrip = () => {
+  const inputRef = useRef(null);
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: conf.GOOGLE_PLACE_API_KEY,
+    libraries,
+  });
+
+  const handleOnPlacesChanged = () => {
+    const place = inputRef.current.getPlaces();
+    console.log(place);
+  };
+
   const { values, handleChange, setFieldValue, handleSubmit, isSubmitting } =
     useFormik({
       initialValues,
@@ -39,14 +60,21 @@ const CreateTrip = () => {
             <label htmlFor="place" className="text-xl my-3 font-medium">
               What is destination of choice?
             </label>
-            <Input
-              type="text"
-              id="place"
-              placeholder="Enter Destination"
-              value={values.place}
-              onChange={handleChange}
-              className="bg-gray-50 border-gray-300 text-md"
-            />
+            {isLoaded && (
+              <StandaloneSearchBox
+                onLoad={(ref) => (inputRef.current = ref)}
+                onPlacesChanged={handleOnPlacesChanged}
+              >
+                <Input
+                  type="text"
+                  id="place"
+                  placeholder="Enter Destination"
+                  value={values.place}
+                  onChange={handleChange}
+                  className="bg-gray-50 border-gray-300 text-md"
+                />
+              </StandaloneSearchBox>
+            )}
           </div>
 
           <div className="flex flex-col">

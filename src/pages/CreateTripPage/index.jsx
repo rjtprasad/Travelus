@@ -5,12 +5,6 @@ import { useFormik } from "formik";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { onSubmit } from "./handleSubmit";
 import { validate } from "./handleValidation";
-import {
-  useJsApiLoader,
-  StandaloneSearchBox,
-} from "@react-google-maps/api";
-import conf from "@/config/env_config";
-import { useRef } from "react";
 
 const initialValues = {
   place: "",
@@ -20,22 +14,7 @@ const initialValues = {
   travelerType: "",
 };
 
-const libraries = ["places"];
-
 const CreateTrip = () => {
-  const inputRef = useRef(null);
-
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: conf.GOOGLE_PLACE_API_KEY,
-    libraries,
-  });
-
-  const handleOnPlacesChanged = () => {
-    const place = inputRef.current.getPlaces();
-    console.log(place);
-  };
-
   const { values, handleChange, setFieldValue, handleSubmit, isSubmitting } =
     useFormik({
       initialValues,
@@ -44,6 +23,8 @@ const CreateTrip = () => {
       validateOnBlur: false,
       onSubmit: onSubmit(),
     });
+
+  console.log(values);
 
   return (
     <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-32 absolute z-10">
@@ -60,21 +41,15 @@ const CreateTrip = () => {
             <label htmlFor="place" className="text-xl my-3 font-medium">
               What is destination of choice?
             </label>
-            {isLoaded && (
-              <StandaloneSearchBox
-                onLoad={(ref) => (inputRef.current = ref)}
-                onPlacesChanged={handleOnPlacesChanged}
-              >
-                <Input
-                  type="text"
-                  id="place"
-                  placeholder="Enter Destination"
-                  value={values.place}
-                  onChange={handleChange}
-                  className="bg-gray-50 border-gray-300 text-md"
-                />
-              </StandaloneSearchBox>
-            )}
+
+            <Input
+              type="text"
+              id="place"
+              placeholder="Enter Destination"
+              value={values.place}
+              onChange={handleChange}
+              className="bg-gray-50 border-gray-300 text-md"
+            />
           </div>
 
           <div className="flex flex-col">

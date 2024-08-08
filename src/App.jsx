@@ -1,3 +1,4 @@
+import { Auth0Provider } from "@auth0/auth0-react";
 import conf from "./config/env_config.js";
 import {
   createBrowserRouter,
@@ -36,8 +37,16 @@ const router = createBrowserRouter(
 const App = () => {
   return (
     <>
-      <Toaster position="top-center" />
-      <RouterProvider router={router} />
+      <Auth0Provider
+        domain={conf.AUTH0_DOMAIN}
+        clientId={conf.AUTH0_CLIENT_ID}
+        authorizationParams={{
+          redirect_uri: window.location.origin,
+        }}
+      >
+        <Toaster position="top-center" />
+        <RouterProvider router={router} />
+      </Auth0Provider>
     </>
   );
 };
